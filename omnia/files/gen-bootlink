@@ -21,8 +21,10 @@
 
 
 KI=`find /boot/ -name "vmlinuz-*" | sort --version-sort | tail -n1`
-DTPHY="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia-phy.dtb"
-DTSFP="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia-sfp.dtb"
+#DTPHY="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia-phy.dtb"
+#DTSFP="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia-sfp.dtb"
+DTPHY="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia.dtb"
+DTSFP="`find /usr/lib/ -name "linux-image-*" | sort --version-sort | tail -n1`/armada-385-turris-omnia.dtb"
 
 if [ -z "${KI}" ] || [ -z "${DTPHY}" ] || [ -z "${DTSFP}" ]; then
         echo "Kernel image or DT not found. Exit."
