@@ -10,7 +10,7 @@
 # $SUDO || root privileges
 #
 
-MIRROR="http://debian.ignum.cz/debian/"
+MIRROR="http://ftp.debian.org/debian/"
 DEBVER="buster"
 HOSTNAME="turris"
 PASSWORD="turris"
@@ -90,6 +90,8 @@ cat >$ROOTDIR/etc/rc.local <<EOF
 exit 0
 EOF
 
+chmod 755 $ROOTDIR/etc/rc.local
+
 cat >$ROOTDIR/etc/fstab <<EOF
 /dev/mmcblk0p1 / btrfs rw,ssd,subvol=@,noatime,nodiratime		0	0
 EOF
@@ -124,16 +126,21 @@ cd $BUILDROOT
 $SUDO chroot $ROOTDIR bash <<ENDSCRIPT
 cd /
 apt-get -y update
-apt-get -y install gnupg build-essential gcc make git python ssh btrfs-tools i2c-tools firmware-atheros libnl-3-dev linux-libc-dev libnl-genl-3-dev python ssh bridge-utils btrfs-tools i2c-tools crda u-boot-tools mtd-utils
+apt-get -y install gnupg build-essential gcc make git python ssh btrfs-tools i2c-tools firmware-atheros libnl-3-dev linux-libc-dev libnl-genl-3-dev python ssh bridge-utils btrfs-tools i2c-tools crda u-boot-tools mtd-utils \
+firmware-iwlwifi wpasupplicant pciutils usbutils ethtool net-tools iperf3 tcpdump
 
 echo "deb http://cirrus.openavionics.eu/~th/omnia/ buster main" >>/etc/apt/sources.list
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B2A1CABB35F7C596
+echo "deb http://debian.rot13.org/omnia/ buster main" >>/etc/apt/sources.list
+apt-key adv --keyserver hkp://keys.openpgp.org --recv-key 928C67F20C828650
 apt-get -y update
 apt-get -y install linux-kernel-omnia
 #/etc/kernel/postinst.d/gen-bootlink
 
 /etc/kernel/postinst.d/gen-bootlink
 sed -i 's/^.\?PermitRootLogin .\+$/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+apt-get clean
 ENDSCRIPT
 
 # cleanup QEMU
