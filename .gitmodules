@@ -6,5 +6,5 @@
 	url = git@github.com:tmshlvck/linux.git
 [submodule "omnia/kernel/linux"]
 	path = omnia/kernel/linux
-	url = https://github.com/tmshlvck/linux.git
+	url = https://github.com/torvalds/linux
 	branch = omnia
